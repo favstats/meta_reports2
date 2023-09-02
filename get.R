@@ -30,7 +30,13 @@ pacman::p_load(
 )
 
 options(googledrive_quiet = TRUE)
-googledrive::drive_auth(path = Sys.getenv("GOOGLE_APPLICATION_CREDENTIALS"))
+# googledrive::drive_auth(path = Sys.getenv("GOOGLE_APPLICATION_CREDENTIALS"))
+# 
+# drive_auth_configure(
+#   path = Sys.getenv("GOOGLE_APPLICATION_CREDENTIALS")
+# )
+
+drive_auth_configure(api_key = Sys.getenv("GOOGLE_APPLICATION_KEY"))
 
 # daily_dat <- readRDS("data/daily.rds")
 daily_dat <- dir("daily", full.names = T) %>% 
