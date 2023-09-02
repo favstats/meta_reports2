@@ -48,7 +48,7 @@ daily_dat <- dir("daily", full.names = T) %>%
 py_install("xvfbwrapper", pip = T)
 py_install("playwright", pip = T)
 
-# system("playwright install")
+system("playwright install")
 
 # py_install("fcntl", pip = T)
 pw_init(use_xvfb = T)
