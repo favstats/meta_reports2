@@ -9,7 +9,7 @@ on:
 jobs:
   update-data:
     name: Update Reports
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     permissions:
       contents: write
     env:
@@ -52,7 +52,6 @@ jobs:
           install.packages('purrr')
           pacman::p_load(reticulate, fs, progress, tidyr, countrycode, dplyr, stringr, lubridate, purrr, glue, rvest, cli, digest)
           remotes::install_github("benjaminguinaudeau/playwrightr", force = T)
-          remotes::install_github("favstats/appendornot")
         shell: Rscript {0}
       - name: Pull Latest Changes
         run: git pull origin main
