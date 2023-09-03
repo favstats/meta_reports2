@@ -49,13 +49,14 @@ print("installed playwright")
 
 conda_install(packages = "xvfbwrapper", pip = T)
 conda_install(packages = "playwright", pip = T)
-#system("playwright install")
 
 
 
 #py_install("fcntl", pip = T)
 pw_init(use_xvfb = T)
+print("pw initted")
 # Launch the browser
+system("playwright install")
 print("Launch the browser")
 
 browser_df <- browser_launch(
