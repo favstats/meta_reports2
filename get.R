@@ -38,21 +38,24 @@ options(googledrive_quiet = TRUE)
 
 drive_auth_configure(api_key = Sys.getenv("GOOGLE_APPLICATION_KEY"))
 
-# daily_dat <- readRDS("data/daily.rds")
-daily_dat <- dir("daily", full.names = T) %>% 
-  keep(~str_detect(.x, "rds")) %>% 
-  map_dfr_progress(readRDS)
+
 
 # cntry <- "ES"
 # cntry <- "ES"
 py_install("xvfbwrapper", pip = T)
+print("installed xvfbwrapper")
 py_install("playwright", pip = T)
+print("installed playwright")
 
-system("playwright install")
+conda_install("playwright", pip = T)
+#system("playwright install")
 
-# py_install("fcntl", pip = T)
+
+
+py_install("fcntl", pip = T)
 pw_init(use_xvfb = T)
 # Launch the browser
+print("Launch the browser")
 
 browser_df <- browser_launch(
   headless = F,
@@ -60,6 +63,11 @@ browser_df <- browser_launch(
   user_agent = NULL,
   user_data_dir = "out"
 )
+
+# daily_dat <- readRDS("data/daily.rds")
+daily_dat <- dir("daily", full.names = T) %>% 
+  keep(~str_detect(.x, "rds")) %>% 
+  map_dfr_progress(readRDS)
 
 print("headlesss")
 # Create a new page
