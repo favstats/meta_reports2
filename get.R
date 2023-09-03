@@ -47,7 +47,7 @@ print("installed xvfbwrapper")
 py_install("playwright", pip = T)
 print("installed playwright")
 
-conda_install("playwright", pip = T)
+conda_install(packages = "playwright", pip = T)
 #system("playwright install")
 
 
