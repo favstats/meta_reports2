@@ -371,7 +371,8 @@ try({
 }) 
 #
 try({
-  
+
+  print("garcia")
   dates_already_present_old <- readRDS("logs/dates_already_present.rds")
   
   dates_already_present <-
@@ -407,6 +408,7 @@ try({
       })
     })
   
+  print("garcia2")
   old_dat <- dir("daily", full.names = T) %>% 
     keep(~str_detect(.x, "rds")) %>% 
     map_dfr_progress(readRDS)
@@ -423,6 +425,7 @@ try({
   
   # table(1:50000%%50)
   
+  print("garcia3")
   
   
   the_dat <-  dir("extracted", full.names = T, recursive = F) %>%
