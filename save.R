@@ -93,7 +93,7 @@ try({
   #  print(head(tobeextracted))
   
   the_dat <- tobeextracted %>%
-    map_dfr_progress(~ {
+    walk_progress(~ {
       cntry_str <- str_split(.x, "_") %>% unlist %>% .[3]
       tframe <- str_split(.x, "_") %>% unlist %>% .[4]
       
@@ -104,6 +104,27 @@ try({
         mutate(path = .x) %>%
         mutate(tf = tframe) %>%
         mutate(cntry = cntry_str)
+
+    if (any(c("name_disclaimer_amount") %in% names(thedata))) {
+    print("##within1")
+    print(thedata)
+    thedata <- thedata %>%
+      filter(is.na(name_disclaimer_amount))  %>%
+      janitor::remove_empty()
+    print("##within2")
+    print(thedata)
+  } else {
+    print("##after1")
+    # print(thedata)
+    thedata <- thedata
+    print("##after2")
+    # print(thedata)
+  }
+
+  thedata %>%
+    bind_rows(readRDS(paste0("daily/",cntry_str, ".rds"))) %>%
+    distinct() %>%
+    saveRDS(.x, paste0("daily/",cntry_str, ".rds"))
       
       return(thedata)
     })
@@ -112,34 +133,15 @@ try({
   
   print("################1")
   
-  if (any(c("name_disclaimer_amount") %in% names(the_dat))) {
-    print("##within1")
-    print(the_dat)
-    the_dat <- the_dat %>%
-      filter(is.na(name_disclaimer_amount))  %>%
-      janitor::remove_empty()
-    print("##within2")
-    print(the_dat)
-  } else {
-    print("##after1")
-    # print(the_dat)
-    the_dat <- the_dat
-    print("##after2")
-    # print(the_dat)
-  }
+
   print("################2")
   
-  the_dat <- the_dat %>%
-    bind_rows(old_dat) %>%
-    distinct()
+
   
   # saveRDS(the_dat, "data/daily.rds")
   print("################3")
   
-  the_dat %>%
-    group_by(cntry) %>%
-    group_split() %>%
-    walk_progress(~{saveRDS(.x, paste0("daily/",.x$cntry[1], ".rds"))})
+
   
   print("################4")
   # vroom::vroom_write(the_dat, "data/daily.csv")
