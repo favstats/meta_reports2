@@ -31,7 +31,7 @@ options(googledrive_quiet = TRUE)
 #   path = Sys.getenv("GOOGLE_APPLICATION_CREDENTIALS")
 # )
 
-drive_auth(api_key = Sys.getenv("GOOGLE_APPLICATION_KEY"))
+drive_auth(path = Sys.getenv("GOOGLE_APPLICATION_KEY"))
 
 
 
