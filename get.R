@@ -42,14 +42,15 @@ drive_auth_configure(api_key = Sys.getenv("GOOGLE_APPLICATION_KEY"))
 
 # cntry <- "ES"
 # cntry <- "ES"
-py_install("xvfbwrapper", pip = T)
-print("installed xvfbwrapper")
-py_install("playwright", pip = T)
-print("installed playwright")
+#py_install("xvfbwrapper", pip = T)
+#py_install("playwright", pip = T)
 
 conda_install(packages = "xvfbwrapper", pip = T)
+
+print("installed xvfbwrapper")
 conda_install(packages = "playwright", pip = T)
 
+print("installed playwright")
 
 
 #py_install("fcntl", pip = T)
