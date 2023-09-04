@@ -166,31 +166,54 @@ dates_already_present <- dates_already_present_old %>%
   c(dates_already_present) %>% 
   unique()
 
+
+print("################8")
+
+
 all_reports_old <- readRDS("logs/all_reports.rds")
 
+print("################9")
+
 all_reports <- dir("report", full.names = T, recursive = T)
+
+print("################10")
 
 all_reports <- all_reports_old %>% 
   c(all_reports) %>% 
   unique()
+print("################11")
 
 saveRDS(all_reports, file = "logs/all_reports.rds")
 
+print("################12")
 
 
 extracted_id <- googledrive::drive_ls("meta_reports") %>% 
   filter(name == "extracted") %>% pull(id)
 
+print("################13")
+
+
 drive_upload_folder(folder = "extracted", drive_path = extracted_id)
+
+print("################14")
+
 
 report_id <- googledrive::drive_ls("meta_reports") %>% 
   filter(name == "report") %>% pull(id)
 
+print("################15")
+
+
 drive_upload_folder(folder = "report", drive_path = report_id)
+
+print("################16")
+
 
 unlink("report", recursive = T, force = T)
 unlink("extracted", recursive = T, force = T)
 
+print("################17")
 
 
 
