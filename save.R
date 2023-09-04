@@ -124,7 +124,7 @@ try({
   thedata %>%
     bind_rows(readRDS(paste0("daily/",cntry_str, ".rds"))) %>%
     distinct() %>%
-    saveRDS(.x, paste0("daily/",cntry_str, ".rds"))
+    saveRDS(paste0("daily/",cntry_str, ".rds"))
       
       return(thedata)
     })
@@ -166,7 +166,7 @@ dates_already_present <- dates_already_present_old %>%
   c(dates_already_present) %>% 
   unique()
 
-all_reports_old <- readRDS("data/all_reports.rds")
+all_reports_old <- readRDS("logs/all_reports.rds")
 
 all_reports <- dir("report", full.names = T, recursive = T)
 
