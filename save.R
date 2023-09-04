@@ -194,6 +194,7 @@ extracted_id <- googledrive::drive_ls("meta_reports") %>%
 print("################13")
 
 
+unlink("extracted/regions", recursive = T, force = T)
 drive_upload_folder(folder = "extracted", drive_path = extracted_id)
 
 print("################14")
