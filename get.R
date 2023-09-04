@@ -36,7 +36,7 @@ options(googledrive_quiet = TRUE)
 #   path = Sys.getenv("GOOGLE_APPLICATION_CREDENTIALS")
 # )
 
-drive_auth_configure(api_key = Sys.getenv("GOOGLE_APPLICATION_KEY"))
+#drive_auth_configure(api_key = Sys.getenv("GOOGLE_APPLICATION_KEY"))
 
 
 
@@ -205,6 +205,11 @@ dt <- expand_grid(countries, daysies) %>%
 
 all_reports_old <- readRDS("logs/all_reports.rds")
 
+# dir("report/ES", full.names = T, recursive = T) %>% sort
+dir.create("extracted")
+dir.create("report")
+
+
 dt %>%
   # arrange(day, country != "RU") %>%
   filter(country == "NL") %>%
@@ -267,10 +272,6 @@ dt %>%
     
     Sys.sleep(runif(1, 0, .3))
   })
-
-# dir("report/ES", full.names = T, recursive = T) %>% sort
-dir.create("extracted")
-dir.create("report")
 
 dir("report/NL", full.names = T, recursive = T) %>%
   sort(decreasing = T) %>% 
@@ -500,7 +501,7 @@ dates_already_present <- dates_already_present_old %>%
 print("################8")
 
 
-all_reports_old <- readRDS("logs/all_reports.rds")
+# all_reports_old <- readRDS("logs/all_reports.rds")
 
 print("################9")
 
