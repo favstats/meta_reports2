@@ -371,6 +371,10 @@ try({
   
 }) 
 #
+
+
+      page_df %>% close_page()
+
 try({
 
   print("garcia")
