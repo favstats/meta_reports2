@@ -65,3 +65,10 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Script Routine Thirty
+      - name: Trigger another workflow
+        run: |
+          curl -X POST \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            "https://api.github.com/repos/favstats/meta_reports2/actions/workflows/save/dispatches" \
+            -d '{"ref":"main"}'
