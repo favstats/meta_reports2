@@ -432,11 +432,12 @@ try({
     keep(~ str_detect(.x, "advert")) %>%
     # .[1:5000] %>%
     discard( ~ magrittr::is_in(.x, unique(old_dat$path))) %>%
-    tibble(thepath = .) %>% 
-    mutate(id =  row_number()%%50) %>% 
-    group_split(id) %>% 
-    map_dfr_progress(~{
-      .x$thepath %>%  map_dfr(~ {
+#    tibble(thepath = .) %>% 
+#    mutate(id =  row_number()%%50) %>% 
+#    group_split(id) %>% 
+#    map_dfr_progress(~{
+  #    .x$thepath %>% 
+  map_dfr_progress(~ {
         cntry_str <- str_split(.x, "_") %>% unlist %>% .[3]
         tframe <- str_split(.x, "_") %>% unlist %>% .[4]
         
@@ -450,7 +451,7 @@ try({
         
         return(thedata)
       })
-    })
+ #   })
   
   print("################1")
   
