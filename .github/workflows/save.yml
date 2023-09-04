@@ -1,12 +1,12 @@
-name: "Get Reports"
+name: "Save Files"
 on:
   push:
     branches:
       - main
 
 jobs:
-  update-data:
-    name: Update Reports
+  save-data:
+    name: Save Reports
     runs-on: ubuntu-20.04
     permissions:
       contents: write
@@ -40,8 +40,6 @@ jobs:
           install.packages('purrr')
           pacman::p_load(reticulate, fs, progress, tidyr, countrycode, dplyr, stringr, lubridate, purrr, glue, rvest, cli, digest)
         shell: Rscript {0}
-      - name: Pull Latest Changes
-        run: git pull origin main
       - name: "Script - Run"
         run: Rscript 'save.R'
 
