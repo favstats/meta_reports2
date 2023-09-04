@@ -1,5 +1,7 @@
-name: "Save Files"
+name: "Get Reports"
 on:
+  schedule:
+    - cron: '*/25 * * * *'
   push:
     branches:
       - main
