@@ -67,7 +67,7 @@ browser_df <- browser_launch(
 )
 
 # daily_dat <- readRDS("data/daily.rds")
-daily_dat <- dir("daily", full.names = T) %>% 
+old_dat <- dir("daily", full.names = T) %>% 
   keep(~str_detect(.x, "rds")) %>% 
   map_dfr_progress(readRDS)
 
@@ -291,7 +291,7 @@ daysies <-
   filter(day <= lubridate::as_date(latest_available_date))
 
 dt <- expand_grid(countries, daysies) %>%
-  filter(country %in% dplyr::count(daily_dat, cntry, sort = T)$cntry) %>% 
+  filter(country %in% dplyr::count(old_dat, cntry, sort = T)$cntry) %>% 
   glimpse
 
 
@@ -409,9 +409,9 @@ try({
     })
   
   print("garcia2")
-  old_dat <- dir("daily", full.names = T) %>% 
-    keep(~str_detect(.x, "rds")) %>% 
-    map_dfr_progress(readRDS)
+#  old_dat <- dir("daily", full.names = T) %>% 
+#    keep(~str_detect(.x, "rds")) %>% 
+#    map_dfr_progress(readRDS)
   
   if (any(c("name_disclaimer_amount") %in% names(old_dat))) {
     old_dat <- old_dat %>%
@@ -426,12 +426,19 @@ try({
   # table(1:50000%%50)
   
   print("garcia3")
-  
- tobeextracted <- dir("extracted", full.names = T, recursive = F) %>%
-    keep(~ str_detect(.x, "advert"))  %>%
-    discard( ~ magrittr::is_in(.x, unique(old_dat$path))) 
 
+  step1 <- dir("extracted", full.names = T, recursive = F) 
+  print(head(step1))
+  step2 <- step1 %>% keep(~ str_detect(.x, "advert")) 
+  print(head(step2))
+  tobeextracted <- step2 %>%  discard( ~ magrittr::is_in(.x, unique(old_dat$path)))
   print(head(tobeextracted))
+  
+# tobeextracted <- dir("extracted", full.names = T, recursive = F) %>%
+#    keep(~ str_detect(.x, "advert"))  %>%
+#    discard( ~ magrittr::is_in(.x, unique(old_dat$path))) 
+
+#  print(head(tobeextracted))
   
   the_dat <- tobeextracted %>%
   map_dfr_progress(~ {
