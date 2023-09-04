@@ -29,14 +29,10 @@ pacman::p_load(
   googledrive
 )
 
-options(googledrive_quiet = TRUE)
-# googledrive::drive_auth(path = Sys.getenv("GOOGLE_APPLICATION_CREDENTIALS"))
-# 
-# drive_auth_configure(
-#   path = Sys.getenv("GOOGLE_APPLICATION_CREDENTIALS")
-# )
 
-#drive_auth_configure(api_key = Sys.getenv("GOOGLE_APPLICATION_KEY"))
+options(googledrive_quiet = TRUE)
+
+drive_auth(path = Sys.getenv("GOOGLE_APPLICATION_KEY"))
 
 
 
@@ -394,9 +390,6 @@ try({
 
 
 
-options(googledrive_quiet = TRUE)
-
-drive_auth(path = Sys.getenv("GOOGLE_APPLICATION_KEY"))
 
 
 
