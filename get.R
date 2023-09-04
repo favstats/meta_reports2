@@ -194,6 +194,8 @@ daysies <-
   ))) %>%
   # days <- tibble::tibble(day = lubridate::as_date(seq.int(lubridate::dmy("15-07-2023"), lubridate::today(), by = 1))) #%>%
   head(-2)
+print("afterdaises")
+
 
 dt <- expand_grid(countries, daysies) %>%
   glimpse
@@ -208,6 +210,7 @@ all_reports_old <- readRDS("logs/all_reports.rds")
 # dir("report/ES", full.names = T, recursive = T) %>% sort
 dir.create("extracted")
 dir.create("report")
+print("creation")
 
 
 dt %>%
@@ -273,6 +276,9 @@ dt %>%
     Sys.sleep(runif(1, 0, .3))
   })
 
+
+print("NL DOWNLOADED")
+
 dir("report/NL", full.names = T, recursive = T) %>%
   sort(decreasing = T) %>% 
   .[1:7] %>% 
@@ -280,10 +286,22 @@ dir("report/NL", full.names = T, recursive = T) %>%
     unzip(.x, exdir = "extracted")
   })
 
+print("NL UNZIPPED")
+
+
 latest_available_date <- dir("extracted") %>% 
   keep(~str_detect(.x, "NL")) %>% 
   sort(decreasing = T) %>% 
   str_split("_") %>% unlist %>% .[2]
+
+print("whats the latest available date")
+
+
+if(length(latest_available_date)==0){
+  print("its actually zero why")
+
+  latest_available_date <- as.character(lubridate::today()-lubridate::days(4))
+}
 
 daysies <-
   tibble::tibble(day = lubridate::as_date(seq.int(
@@ -296,6 +314,7 @@ dt <- expand_grid(countries, daysies) %>%
   filter(country %in% old_dat) %>% 
   glimpse
 
+print("NL DONE")
 
 try({
   
