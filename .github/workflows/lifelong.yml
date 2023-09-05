@@ -6,9 +6,6 @@ on:
     workflows: ["Get Reports"]
     types:
       - completed
-  push:
-    branches:
-      - main
 
 jobs:
   update-lifelong-reports:
