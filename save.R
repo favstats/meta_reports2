@@ -1,12 +1,6 @@
 
-# library(tidyverse)
 
 source("use.R")
-
-options(python_init = TRUE)
-
-
-
 
 # install.packages("pacman")
 pacman::p_load(
@@ -24,7 +18,7 @@ pacman::p_load(
 # daily_dat <- readRDS("data/daily.rds")
 old_dat <- dir("daily", full.names = T) %>% 
   keep(~str_detect(.x, "rds")) %>%
-  map_dfr(readRDS)
+  map_dfr_progress(readRDS)
 
 old_dat %>%
   mutate(date_produced = lubridate::ymd(date)) %>%
@@ -35,7 +29,28 @@ old_dat %>%
   ggplot(aes(date_produced, n)) +
   geom_col() +
   theme_minimal() +
-  labs(y = "How many Countries", x = "For each date")
+  labs(y = "How many Countries", x = "For each date")  +
+  labs(y = "How many Countries", x = "For each date", title = "Daily Reports")
 
-ggsave("overview.png", width = 8, height = 6)
+ggsave("overview.png", width = 8, height = 5)
+
+
+
+old_dat <- dir("lifelong", full.names = T) %>% 
+  keep(~str_detect(.x, "rds")) %>%
+  map_dfr_progress(readRDS)
+
+old_dat %>%
+  mutate(date_produced = lubridate::ymd(date)) %>%
+  drop_na(date_produced) %>% 
+  janitor::clean_names() %>% 
+  distinct(cntry, date_produced, .keep_all = T) %>% 
+  count(date_produced) %>%
+  ggplot(aes(date_produced, n)) +
+  geom_col() +
+  theme_minimal() +
+  labs(y = "How many Countries", x = "For each date", title = "Lifelong Reports")
+
+ggsave("overview_ll.png", width = 8, height = 5)
+
 
