@@ -17,7 +17,7 @@ pacman::p_load(
   lubridate,
   purrr,
   glue,
-  rvest
+  ggplot2
 )
 
 
