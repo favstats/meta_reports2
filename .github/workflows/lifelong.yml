@@ -1,7 +1,11 @@
-name: "Get Lifelong Reports"
+name: Get Lifelong Reports
+
+# Only trigger, when the build workflow succeeded
 on:
-  schedule:
-    - cron: '*/25 * * * *'
+  workflow_run:
+    workflows: ["Get Reports"]
+    types:
+      - completed
   push:
     branches:
       - main
