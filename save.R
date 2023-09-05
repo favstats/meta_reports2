@@ -29,8 +29,7 @@ old_dat %>%
   ggplot(aes(date_produced, n)) +
   geom_col() +
   theme_minimal() +
-  labs(y = "How many Countries", x = "For each date")  +
-  labs(y = "How many Countries", x = "For each date", title = "Daily Reports")
+  labs(y = "How many Countries", x = "For each date", title = paste0("Daily Reports: ", Sys.time()))
 
 ggsave("overview.png", width = 8, height = 5)
 
@@ -49,7 +48,7 @@ old_dat %>%
   ggplot(aes(date_produced, n)) +
   geom_col() +
   theme_minimal() +
-  labs(y = "How many Countries", x = "For each date", title = "Lifelong Reports")
+  labs(y = "How many Countries", x = "For each date", title = paste0("Lifelong Reports: ", Sys.time()))
 
 ggsave("overview_ll.png", width = 8, height = 5)
 
