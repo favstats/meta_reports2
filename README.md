@@ -6,3 +6,4 @@ These spending reports really should be available via the Meta Ad Library API. F
 
 This repository changes that.
 
+![](overview.png)
