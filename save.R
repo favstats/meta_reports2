@@ -22,7 +22,7 @@ pacman::p_load(
 
 
 # daily_dat <- readRDS("data/daily.rds")
-old_dat <- dir("daily", full.names = F) %>% 
+old_dat <- dir("daily", full.names = T) %>% 
   keep(~str_detect(.x, "rds")) %>%
   map_dfr(readRDS)
 
