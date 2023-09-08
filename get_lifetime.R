@@ -65,6 +65,51 @@ browser_df <- browser_launch(
 
 dir.create("lifelong")
 
+
+
+
+
+cntries <- c("AD", "AE", "AG", "AI", "AL", "AM", "AO", "AR", "AT", "AU", "AZ", "BA", 
+"BB", "BD", "BE", "BF", "BG", "BH", "BI", "BJ", "BM", "BN", "BO", "BR", 
+"BS", "BT", "BW", "BY", "BZ", "CA", "CD", "CF", "CG", "CH", "CI", "CL", 
+"CM", "CO", "CR", "CV", "CY", "CZ", "DE", "DJ", "DK", "DM", "DO", "DZ", 
+"EC", "EE", "EG", "ER", "ES", "ET", "FI", "FJ", "FK", "FM", "FR", "GA", 
+"GB", "GD", "GE", "GG", "GH", "GI", "GM", "GN", "GQ", "GR", "GT", "GW", 
+"GY", "HN", "HR", "HT", "HU", "ID", "IE", "IL", "IM", "IN", "IQ", "IS", 
+"IT", "JE", "JM", "JO", "JP", "KE", "KG", "KH", "KI", "KM", "KN", "KW", 
+"KY", "KZ", "LA", "LB", "LC", "LI", "LK", "LR", "LS", "LT", "LU", "LV", 
+"LY", "MA", "MC", "MD", "ME", "MG", "MH", "MK", "ML", "MM", "MN", "MR", 
+"MS", "MT", "MU", "MV", "MW", "MX", "MY", "MZ", "NA", "NE", "NG", "NI", 
+"NL", "NO", "NP", "NR", "NZ", "OM", "PA", "PE", "PG", "PH", "PK", "PL", 
+"PS", "PT", "PW", "PY", "QA", "RO", "RS", "RW", "SA", "SB", "SC", "SE", 
+"SG", "SH", "SI", "SK", "SL", "SM", "SN", "SO", "SR", "SS", "ST", "SV", 
+"SZ", "TC", "TD", "TG", "TH", "TJ", "TM", "TN", "TO", "TR", "TT", "TV",
+"TW", "TZ", "UA", "UG", "US", "UY", "UZ", "VC", "VE", "VG", "VI", "VN",
+"VU", "WF", "WS", "YE", "YT", "ZA", "ZM", "ZW") %>% unique
+
+
+
+retrieve_dats <- function(cntry) {
+  
+  more_data <- readr::read_rds(glue::glue("https://github.com/favstats/meta_reports2/raw/main/lifelong/{cntry}.rds"))  
+  
+  return(more_data)
+}
+
+#retrieve_dats <- possibly(retrieve_dats, otherwise = NULL)
+
+#more_data <- cntries %>% 
+#  map_dfr_progress(retrieve_dats)
+
+
+
+
+
+
+
+
+
+
 old_dat <- dir("daily", full.names = F) %>% 
   keep(~str_detect(.x, "rds")) %>%
   str_remove_all("\\.rds") %>%
@@ -448,9 +493,11 @@ try({
     # print(thedata)
   }
 
+
+      
 try({
   thedata <- thedata %>%
-    bind_rows(readRDS(paste0("lifelong/",cntry_str, ".rds"))) %>%
+    bind_rows(retrieve_dats(cntry_str)) %>%
     distinct()   
 })
       
@@ -516,6 +563,15 @@ drive_upload_folder(folder = "report", drive_path = report_id)
 
 print("################16")
 
+lifelong_id <- googledrive::drive_ls("meta_reports") %>% 
+  filter(name == "lifelong") %>% pull(id)
+
+print("################1666")
+
+
+drive_upload_folder(folder = "lifelong", drive_path = lifelong_id)
+
+print("################17222")
 
 unlink("report", recursive = T, force = T)
 unlink("extracted", recursive = T, force = T)
